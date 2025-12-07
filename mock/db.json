@@ -1,0 +1,61 @@
+{
+  "interviews": [
+    {
+      "id": "1",
+      "title": "Frontend Intern",
+      "createdAt": "2025-10-01T10:00:00Z"
+    }
+  ],
+  "questions": [
+    {
+      "id": "1",
+      "interviewId": 1,
+      "text": "Explain event loop in JS."
+    },
+    {
+      "id": "f42b",
+      "interviewId": "1",
+      "question": "For job, discuss fundamentals based on: 5 questions at random. Include concrete examples.",
+      "difficulty": "Easy"
+    },
+    {
+      "id": "cdf8",
+      "interviewId": "1",
+      "question": "For job, discuss practical scenario based on: 5 questions at random. Include concrete examples.",
+      "difficulty": "Intermediate"
+    },
+    {
+      "id": "9ffc",
+      "interviewId": "1",
+      "question": "For job, discuss trade-offs based on: 5 questions at random. Include concrete examples.",
+      "difficulty": "Advanced"
+    },
+    {
+      "id": "f1a2",
+      "interviewId": "1",
+      "question": "For job, discuss debugging based on: 5 questions at random. Include concrete examples.",
+      "difficulty": "Easy"
+    },
+    {
+      "id": "ef78",
+      "interviewId": "1",
+      "question": "For job, discuss performance based on: 5 questions at random. Include concrete examples.",
+      "difficulty": "Intermediate"
+    }
+  ],
+  "applicants": [
+    {
+      "id": "1",
+      "name": "Jordan Lee",
+      "email": "jordan@example.com"
+    }
+  ],
+  "results": [
+    {
+      "id": "1",
+      "applicantId": 1,
+      "interviewId": 1,
+      "score": 85
+    }
+  ]
+}
