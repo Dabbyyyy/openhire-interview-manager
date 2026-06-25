@@ -8,7 +8,7 @@ OpenHire is a lightweight interview manager with:
 
 ## 🚀 Quick Start
 ```bash
-git clone https://github.com/Dabbyyyy/openhire-interview-manager.git openhire
+git clone <your-repo-url> openhire
 cd openhire
 npm i
 cp .env.example .env
@@ -21,7 +21,7 @@ npm run dev
 ```
 Then open http://localhost:5173.
 
-## 🧩 Key npm scripts
+## 🧩 Scripts (add to package.json)
 ```json
 {
   "scripts": {
