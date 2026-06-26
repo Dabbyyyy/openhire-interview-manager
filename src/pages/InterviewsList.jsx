@@ -77,9 +77,9 @@ export default function InterviewsList() {
             <thead>
               <tr>
                 <th>Title</th>
-                <th>Job role</th>
-                <th># Questions</th>
-                <th>Applicants (NS / C)</th>
+                <th>Job Role</th>
+                <th>Number of Questions</th>
+                <th>Applicants</th>
                 <th className="text-end">Actions</th>
               </tr>
             </thead>

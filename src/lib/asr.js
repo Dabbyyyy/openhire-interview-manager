@@ -28,10 +28,10 @@ async function getPipeline() {
 
 /** Transcribe an audio Blob -> string */
 export async function transcribe(blob) {
-  // Keep the same input contract as your existing app: pass the Blob through.
-  // If your recorder already emits PCM Float32 blobs this will work as-is.
+  // Keep the same input contract as  existing app: pass the Blob through.
+  // If  recorder already emits PCM Float32 blobs this will work as-is.
   // (For most recorders using MediaRecorder/webm, Transformers.js can still
-  // read TypedArray/ArrayBuffer; we preserve your current approach.)
+  // read TypedArray/ArrayBuffer; we preserve  current approach.)
   const arrayBuffer = await blob.arrayBuffer();
   const float32 = new Float32Array(arrayBuffer);
 

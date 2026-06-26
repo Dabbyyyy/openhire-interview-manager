@@ -1,7 +1,7 @@
 // src/pages/ApplicantsList.jsx
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Applicant, api } from '../lib/api';
+import { Applicant, Interview } from '../lib/api';
 
 export default function ApplicantsList() {
   const { interviewId } = useParams();
@@ -15,8 +15,8 @@ export default function ApplicantsList() {
   async function load() {
     setLoading(true);
     try {
-      const i = await api('interview', { params: { id: `eq.${interviewId}` } });
-      setInterviewTitle(i?.[0]?.title ?? '');
+      const i = await Interview.getById(interviewId);
+      setInterviewTitle(i?.title ?? '');
       const data = await Applicant.listForInterview(interviewId);
       setRows(data ?? []);
     } catch (e) {
@@ -50,7 +50,21 @@ export default function ApplicantsList() {
     }
   }
 
-  useEffect(() => { load(); }, [interviewId]);
+  useEffect(() => {
+  async function load() {
+    try {
+      const i = await Interview.getById(interviewId);
+      setInterviewTitle(i?.title || '');
+
+      const rows = await Applicant.listForInterview(interviewId);
+      setRows(rows);
+    } catch (e) {
+      setError(e.message);
+    }
+  }
+
+  load();
+  }, [interviewId]);
 
   if (error) return <div className="alert alert-danger">Error: {error}</div>;
   if (!rows) return <p>Loading…</p>;
@@ -85,8 +99,8 @@ export default function ApplicantsList() {
                 return (
                   <tr key={a.id}>
                     <td>{fullName}</td>
-                    <td>{a.email_address}</td>
-                    <td>{a.phone_number}</td>
+                    <td>{a.email}</td>
+                    <td>{a.phone}</td>
                     <td>{a.interview_status}</td>
                     <td className="text-end">
                       <button className="btn btn-sm btn-outline-primary me-2" onClick={() => onCopy(link)}>

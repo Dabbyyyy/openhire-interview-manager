@@ -1,7 +1,7 @@
 // src/pages/ApplicantForm.jsx
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Applicant, api } from '../lib/api';
+import { Applicant, Interview } from '../lib/api';
 
 export default function ApplicantForm({ mode = 'create' }) {
   const navigate = useNavigate();
@@ -12,8 +12,8 @@ export default function ApplicantForm({ mode = 'create' }) {
     title: 'Mr',
     firstname: '',
     surname: '',
-    phone_number: '',
-    email_address: '',
+    phone: '',
+    email: '',
     // UX choice, free text in DB: Not Started | In Progress | Completed
     interview_status: 'Not Started',
   });
@@ -23,19 +23,18 @@ export default function ApplicantForm({ mode = 'create' }) {
   useEffect(() => {
     async function load() {
       try {
-        const i = await api('interview', { params: { id: `eq.${interviewId}` } });
-        setInterviewTitle(i?.[0]?.title ?? '');
+        const i = await Interview.getById(interviewId);
+        setInterviewTitle(i?.title ?? '');
         if (mode === 'edit' && applicantId) {
-          const res = await api('applicant', { params: { id: `eq.${applicantId}` } });
-          if (res?.length) {
-            const a = res[0];
+          const a = await Applicant.getById(applicantId);
+          if (a) {
             setForm({
               title: a.title ?? 'Mr',
               firstname: a.firstname ?? '',
               surname: a.surname ?? '',
-              phone_number: a.phone_number ?? '',
-              email_address: a.email_address ?? '',
-              interview_status: a.interview_status ?? 'Not Started',
+              phone: a.phone ?? '',
+              email: a.email ?? '',
+              interview_status: a.interview_status ?? 'Not Started'
             });
           }
         }
@@ -59,7 +58,7 @@ export default function ApplicantForm({ mode = 'create' }) {
       setError('Please enter first name and surname');
       return;
     }
-    if (!form.email_address.trim()) {
+    if (!form.email.trim()) {
       setError('Please enter an email address');
       return;
     }
@@ -112,11 +111,11 @@ export default function ApplicantForm({ mode = 'create' }) {
         <div className="row g-3">
           <div className="col">
             <label className="form-label">Email</label>
-            <input name="email_address" type="email" className="form-control" value={form.email_address} onChange={onChange} />
+            <input name="email" type="email" className="form-control" value={form.email} onChange={onChange} />
           </div>
           <div className="col">
             <label className="form-label">Phone</label>
-            <input name="phone_number" className="form-control" value={form.phone_number} onChange={onChange} />
+            <input name="phone" className="form-control" value={form.phone} onChange={onChange} />
           </div>
         </div>
 

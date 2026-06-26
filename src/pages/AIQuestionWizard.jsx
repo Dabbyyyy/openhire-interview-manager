@@ -8,7 +8,7 @@ import { generateQuestions } from '../lib/llm';
 
 // Canonical difficulty expected by DB: Easy | Intermediate | Advanced
 function canonDifficulty(raw) {
-  const allowed = ['Easy', 'Intermediate', 'Advanced'];
+  const allowed = ['Easy', 'Medium', 'Hard'];
   let d = String(raw || '').trim();
   if (allowed.includes(d)) return d;
 
@@ -132,7 +132,7 @@ export default function AIQuestionWizard() {
   return (
     <div className="container" style={{ maxWidth: 900 }}>
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h1 className="h3 m-0">AI Question Generator — {interview?.title}</h1>
+        <h1 className="h3 m-0">AI Question Generator  {interview?.title}</h1>
         <Link className="btn btn-light" to={`/interviews/${interviewId}/questions`}>
           ← Back
         </Link>

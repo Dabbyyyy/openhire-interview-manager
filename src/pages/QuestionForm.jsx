@@ -1,7 +1,7 @@
 // src/pages/QuestionForm.jsx
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Question, api } from '../lib/api';
+import { Question, Interview } from '../lib/api';
 
 export default function QuestionForm({ mode = 'create' }) {
   const navigate = useNavigate();
@@ -18,12 +18,16 @@ export default function QuestionForm({ mode = 'create' }) {
   useEffect(() => {
     async function load() {
       try {
-        const i = await api('interview', { params: { id: `eq.${interviewId}` } });
-        setInterviewTitle(i?.[0]?.title ?? '');
+        const i = await Interview.getById(interviewId);
+        setInterviewTitle(i?.title ?? '');
         if (mode === 'edit' && questionId) {
-          const q = await api('question', { params: { id: `eq.${questionId}` } });
-          if (q?.length) {
-            setForm({ question: q[0].question, difficulty: q[0].difficulty });
+          const q = await Question.getById(questionId);
+
+          if (q) {
+            setForm({
+              question: q.question, 
+              difficulty: q.difficulty
+            });
           }
         }
       } catch (e) {

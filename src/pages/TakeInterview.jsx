@@ -187,7 +187,7 @@ export default function TakeInterview() {
         <ul>
           <li>You’ll answer {questions.length} question(s), one per page.</li>
           <li>Click <strong>Start recording</strong> to speak your answer, then you can <strong>Pause</strong> and <strong>Resume</strong>, and finally <strong>Stop</strong>.</li>
-          <li>We’ll transcribe your speech to text (Whisper) — you can edit the text before continuing.</li>
+          <li>We’ll transcribe your speech to text (Whisper)  you can edit the text before continuing.</li>
         </ul>
         <div className="d-flex gap-2 mt-3">
           <button className="btn btn-primary" onClick={() => setStep(0)} disabled={questions.length === 0}>Start</button>

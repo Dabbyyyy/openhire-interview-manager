@@ -74,7 +74,7 @@ export default function Results() {
   return (
     <div className="container" style={{ maxWidth: 1100 }}>
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h1 className="h4 m-0">Results — {interview?.title}</h1>
+        <h1 className="h4 m-0">Results  {interview?.title}</h1>
         <Link className="btn btn-light" to="/">← Back to interviews</Link>
       </div>
 

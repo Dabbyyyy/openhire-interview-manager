@@ -1,7 +1,7 @@
 // src/pages/InterviewForm.jsx
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Interview, api } from '../lib/api';
+import { Interview } from '../lib/api';
 
 export default function InterviewForm({ mode = 'create' }) {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export default function InterviewForm({ mode = 'create' }) {
   useEffect(() => {
     async function loadExisting() {
       try {
-        const data = await api('interview', { params: { id: `eq.${id}` } });
+        const data = await Interview.getById(id);
         if (Array.isArray(data) && data.length > 0) {
           const { title, job_role, description, status } = data[0];
           setForm({ title, job_role, description, status });
@@ -77,7 +77,7 @@ export default function InterviewForm({ mode = 'create' }) {
         </div>
 
         <div>
-          <label className="form-label">Job role</label>
+          <label className="form-label">Job Role</label>
           <input name="job_role" className="form-control" value={form.job_role} onChange={onChange} />
         </div>
 

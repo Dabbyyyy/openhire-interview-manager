@@ -3,9 +3,9 @@
 const env = (typeof import.meta !== 'undefined' && import.meta.env) || {};
 
 // --- Config ---
-const API_KEY = env.VITE_OPENAI_API_KEY || ''; // real key optional
-const API_URL = (env.VITE_UQ_API_URL || 'https://api.openai.com/v1').replace(/\/+$/, '');
-const MODEL   = env.VITE_UQ_LLM_MODEL || 'gpt-4o-mini';
+const API_KEY = env.VITE_OPENAI_API_KEY || '';
+const API_URL = 'https://api.openai.com/v1';
+const MODEL = 'gpt-4o-mini';
 
 // Enable mock if user asked OR in demo OR when no key is provided.
 const MOCK = String(env.VITE_MOCK_AI) === '1' || String(env.VITE_DEMO) === '1' || !API_KEY;
@@ -48,7 +48,9 @@ export async function generateQuestions({ role, description, num = 5, difficulty
     try {
       const maybe = JSON.parse(text);
       if (maybe && Array.isArray(maybe.questions)) return normalize(maybe.questions, num);
-    } catch {}
+    }catch (e) {
+      console.log(e);
+    }
     // As a last resort in portfolio/demo contexts, fail soft to mock
     return normalize(makeMockQuestions({ role, description, num, difficultyMix }), num);
   }
@@ -79,7 +81,7 @@ function coerceToArray(text, num) {
 }
 
 function normalize(arr, num) {
-  const allowed = ['Easy', 'Intermediate', 'Advanced'];
+  const allowed = ['Easy', 'Medium', 'Hard'];
   return arr
     .slice(0, num)
     .map((q, i) => {
