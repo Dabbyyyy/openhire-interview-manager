@@ -1,46 +1,165 @@
 # OpenHire
 
-OpenHire is a lightweight interview manager with:
-- React + Vite frontend
-- JSON Server mock API for easy local setup
-- Optional AI-based question generation (OpenAI-compatible)
-- Optional offline speech-to-text via @xenova/transformers
+OpenHire is a web-based interview management system built with React, Vite, and Supabase. It allows recruiters and hiring managers to create interviews, manage applicants, generate AI-assisted interview questions, and collect candidate responses.
 
-## 🚀 Quick Start
+## Features
+
+- Create, edit, and delete interviews
+- Manage interview questions with difficulty levels
+- Manage applicants for each interview
+- Generate interview questions using OpenAI
+- Share interview links with candidates
+- Record and store candidate answers
+- Optional offline speech-to-text support using `@xenova/transformers`
+- Responsive user interface built with Bootstrap
+
+## Technology Stack
+
+### Frontend
+- React
+- Vite
+- React Router
+- Bootstrap
+
+### Backend and Database
+- Supabase
+
+### AI Features
+- OpenAI API
+- `@xenova/transformers` for offline speech recognition
+
+## Project Structure
+
+```text
+src/
+├── pages/
+│   ├── AIQuestionWizard.jsx
+│   ├── ApplicantForm.jsx
+│   ├── ApplicantsList.jsx
+│   ├── InterviewForm.jsx
+│   ├── InterviewsList.jsx
+│   ├── QuestionForm.jsx
+│   ├── QuestionsList.jsx
+│   ├── Results.jsx
+│   └── TakeInterview.jsx
+├── lib/
+│   ├── api.js
+│   ├── llm.js
+│   └── supabase.js
+├── App.jsx
+└── App.css
+```
+
+## Prerequisites
+
+- Node.js 18 or newer
+- npm
+- A Supabase project
+- An OpenAI API key (optional)
+
+## Quick Start (Local)
+
 ```bash
-git clone <your-repo-url> openhire
-cd openhire
-npm i
-cp .env.example .env
+git clone <your-repository-url>
+cd openhire-interview-manager
 
-# start the mock API (port 5174)
-npm run mock
+npm install
+```
 
-# start the app (port 5173)
+Create a `.env` file in the project root and add:
+
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+
+VITE_OPENAI_API_KEY=your_openai_api_key
+
+VITE_ASR_MODEL=Xenova/whisper-base.en
+VITE_DISABLE_ASR=0
+VITE_MOCK_AI=0
+VITE_DEMO=0
+```
+
+Start the development server:
+
+```bash
 npm run dev
 ```
-Then open http://localhost:5173.
 
-## 🧩 Scripts (add to package.json)
-```json
-{
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "mock": "node mock/server.js"
-  }
-}
+Then open:
+
+```text
+http://localhost:5173
 ```
 
-## 🧰 Environment Variables
-See `.env.example` for all variables.
-- `VITE_API_BASE` – API base URL (default mock: `http://localhost:5174`)
-- `VITE_OPENAI_API_KEY` – optional for AI question generation
-- `VITE_ASR_MODEL` – ASR model (default: `Xenova/whisper-base.en`)
-- `VITE_DISABLE_ASR` – disable ASR if low on memory
-- `VITE_MOCK_AI` – mock AI responses if no key
-- `VITE_DEMO` – fully offline demo mode
+## Available Scripts
 
-## 📜 License
-MIT License (see LICENSE)
+```bash
+npm run dev       # Start development server
+npm run build     # Create production build
+npm run preview   # Preview production build locally
+```
+
+## Database Schema
+
+### interviews
+- id
+- title
+- job_role
+- description
+- status
+- created_at
+
+### questions
+- id
+- interview_id
+- question
+- difficulty
+- created_at
+
+### applicants
+- id
+- interview_id
+- title
+- firstname
+- surname
+- email
+- phone
+- interview_status
+- created_at
+
+### answers
+- id
+- interview_id
+- question_id
+- applicant_id
+- answer
+- created_at
+
+## AI Question Generation
+
+The application uses the OpenAI Chat Completions API to generate interview questions.
+
+To use this feature, provide a valid API key in the `.env` file:
+
+```env
+VITE_OPENAI_API_KEY=your_openai_api_key
+```
+
+If you want to run the application without OpenAI access, enable mock mode:
+
+```env
+VITE_MOCK_AI=1
+```
+
+## Production Build
+
+```bash
+npm run build
+```
+
+The optimized build will be generated in the `dist/` folder.
+
+## License
+
+See MIT License
