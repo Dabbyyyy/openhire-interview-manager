@@ -1,12 +1,11 @@
 // src/pages/TakeInterview.jsx
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Applicant, ApplicantAnswer, Interview, Question } from '../lib/api';
 import { transcribe as whisperTranscribe } from '../lib/asr';
 
 export default function TakeInterview() {
   const { interviewId, applicantId } = useParams();
-  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(null);
@@ -107,7 +106,7 @@ export default function TakeInterview() {
         rec.start();
         recRef.current = rec;
       }
-    } catch (e) {
+    } catch {
       setErr('Microphone permission denied or unavailable. You can type your answer instead.');
     }
   }
@@ -132,7 +131,9 @@ export default function TakeInterview() {
         mediaStreamRef.current.getTracks().forEach(t => t.stop());
         mediaStreamRef.current = null;
       }
-    } catch {}
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async function saveAndNext() {
@@ -163,7 +164,9 @@ export default function TakeInterview() {
       if (idx + 1 < questions.length) {
         setStep(idx + 1);
       } else {
-        try { await Applicant.updateById(applicant.id, { interview_status: 'Completed' }); } catch {}
+        try { await Applicant.updateById(applicant.id, { interview_status: 'Completed' }); } catch (error) {
+          console.warn('Failed to update applicant status', error);
+        }
         setStep(questions.length);
       }
       window.scrollTo(0, 0);
